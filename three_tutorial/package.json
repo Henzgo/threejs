@@ -1,0 +1,12 @@
+{
+  "dependencies": {
+    "three": "^0.152.2"
+  },
+  "devDependencies": {
+    "parcel": "^2.8.3",
+    "vite": "^4.3.5"
+  },
+  "scripts": {
+    "start": "parcel ./src/index.html"
+  }
+}
