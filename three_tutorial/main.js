@@ -1,4 +1,9 @@
 import * as THREE from 'three';
+import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+//import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
+
+
+//const loader = new GLTFLoader();
 // Threejs documentation tutorial
 
 // Setting up a new scene
@@ -16,18 +21,38 @@ const renderer = new THREE.WebGLRenderer();
 renderer.setSize( window.innerWidth, window.innerHeight );
 // Add the renderer element to our HTML document.
 document.body.appendChild( renderer.domElement );
+// The code below makes it possible that we can rotate the object with the mouse (IMPORTANT, code has to come AFTER setting up the camera!)
+const controls = new OrbitControls( camera, renderer.domElement );
 
-// Add the cube
+// Adding a cube
 const geometry = new THREE.BoxGeometry( 1, 1, 1 );
 const material = new THREE.MeshBasicMaterial( { color: 0xFEA1A1 } );
 const cube = new THREE.Mesh( geometry, material );
 scene.add( cube );
 
+// Adding a sphere
+const sphereGeometry = new THREE.SphereGeometry(4); // 4 is the radius of the sphere
+const sphereMaterial = new THREE.MeshBasicMaterial({
+  color: 0xB6EAFA,
+  // wireframe: true, makes the sphere surface made out of lines, squares and triangles. Like having a sphere made out of wires.
+  // If we set it to false, the surface would be black because we don't have any light in our scene yet (just like in the real world how objects need to be illuminated).
+  wireframe: true
+});
+const sphere = new THREE.Mesh(sphereGeometry, sphereMaterial);
+scene.add(sphere);
+
+// To move objects, use the following code:
+// geometry_object.position.set(x, y, z); coordinates or geometry_object.x = n || geometry_object.y = n || geometry_object.z = n
+
 camera.position.z = 5;
+// controls.update() must be called after any manual changes to the camera's transform
+controls.update();
 // Rendering the scene
 function animate() {
 	requestAnimationFrame( animate );
 
+  // required if controls.enableDamping or controls.autoRotate are set to true
+  controls.update();
   cube.rotation.x += 0.01;
   cube.rotation.y += 0.01;
 
