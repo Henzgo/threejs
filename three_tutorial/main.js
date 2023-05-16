@@ -1,5 +1,6 @@
 import * as THREE from 'three';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+import * as dat from 'dat.gui'
 //import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 
 
@@ -45,8 +46,24 @@ scene.add(sphere);
 // geometry_object.position.set(x, y, z); coordinates or geometry_object.x = n || geometry_object.y = n || geometry_object.z = n
 
 camera.position.z = 5;
+
+const gui = new dat.GUI();
+
+const options = {
+  sphereColor: '#FEA1A1',
+  cubeColor: '#FEA1A1'
+};
+
+gui.addColor(options, 'sphereColor').onChange(function(e){
+  sphere.material.color.set(e);
+});
+gui.addColor(options, 'cubeColor').onChange(function(e){
+  cube.material.color.set(e);
+});
+
 // controls.update() must be called after any manual changes to the camera's transform
 controls.update();
+
 // Rendering the scene
 function animate() {
 	requestAnimationFrame( animate );
